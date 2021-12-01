@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -41,7 +40,7 @@ func Answer(input string) (int, error) {
 			line = input[0:i]
 			input = input[i+1:]
 		}
-		val, err := strconv.ParseInt(line, 10, 64)
+		val, err := parseInt(line)
 		if err != nil {
 			return 0, err
 		}
@@ -52,4 +51,19 @@ func Answer(input string) (int, error) {
 		prev.val = val
 	}
 	return increases, nil
+}
+
+func parseInt(val string) (int64, error) {
+	var intVal int64
+	factor := int64(1)
+	for i := len(val) - 1; i >= 0; i-- {
+		c := val[i]
+		if c >= '0' && c <= '9' {
+			intVal += int64(c-'0') * factor
+		} else {
+			return intVal, fmt.Errorf("bad int: %q", val)
+		}
+		factor *= 10
+	}
+	return intVal, nil
 }
