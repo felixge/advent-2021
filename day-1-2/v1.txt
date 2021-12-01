@@ -1,0 +1,11 @@
+goos: linux
+goarch: amd64
+pkg: github.com/felixge/advent-2021/day-1-2
+cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+BenchmarkAnswer-6   	 4465159	       262.4 ns/op
+BenchmarkAnswer-6   	 4463922	       260.4 ns/op
+BenchmarkAnswer-6   	 4544709	       260.2 ns/op
+BenchmarkAnswer-6   	 4524207	       261.8 ns/op
+BenchmarkAnswer-6   	 4519270	       261.3 ns/op
+PASS
+ok  	github.com/felixge/advent-2021/day-1-2	7.437s
