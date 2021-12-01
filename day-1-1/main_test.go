@@ -26,3 +26,9 @@ func TestAnswer(t *testing.T) {
 	is.NoErr(err)
 	is.Equal(answer, 7)
 }
+
+func BenchmarkAnswer(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Answer(testInput)
+	}
+}

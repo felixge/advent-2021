@@ -31,7 +31,16 @@ func Answer(input string) (int, error) {
 		set bool
 	}
 	var increases int
-	for _, line := range strings.Split(input, "\n") {
+	var line string
+	for len(input) > 0 {
+		i := strings.IndexByte(input, '\n')
+		if i == -1 {
+			line = input
+			input = ""
+		} else {
+			line = input[0:i]
+			input = input[i+1:]
+		}
 		val, err := strconv.ParseInt(line, 10, 64)
 		if err != nil {
 			return 0, err
