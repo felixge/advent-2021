@@ -24,46 +24,27 @@ func run() error {
 	return err
 }
 
+// Solution from Valentin Deleplace: https://twitter.com/val_deleplace/status/1466442802330488838
+
 func Answer(input string) (int, error) {
-	var prev struct {
-		val int64
-		set bool
-	}
-	var increases int
-	var line string
-	for len(input) > 0 {
-		i := strings.IndexByte(input, '\n')
-		if i == -1 {
-			line = input
-			input = ""
+	var prev int64 = -9999
+	var increases int = -1
+
+	val := int64(0)
+	for p, N := 0, len(input); p < N; p++ {
+		c := input[p]
+		if c != '\n' {
+			val = (val << 8) + int64(c)
 		} else {
-			line = input[0:i]
-			input = input[i+1:]
+			if val > prev {
+				increases++
+			}
+			prev = val
+			val = 0
 		}
-		val, err := parseInt(line)
-		if err != nil {
-			return 0, err
-		}
-		if val > prev.val && prev.set {
-			increases++
-		}
-		prev.set = true
-		prev.val = val
+	}
+	if val > prev {
+		increases++
 	}
 	return increases, nil
-}
-
-func parseInt(val string) (int64, error) {
-	var intVal int64
-	factor := int64(1)
-	for i := len(val) - 1; i >= 0; i-- {
-		c := val[i]
-		if c >= '0' && c <= '9' {
-			intVal += int64(c-'0') * factor
-		} else {
-			return intVal, fmt.Errorf("bad int: %q", val)
-		}
-		factor *= 10
-	}
-	return intVal, nil
 }
