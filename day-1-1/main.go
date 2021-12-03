@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
+	"unsafe"
 )
 
 func main() {
@@ -33,18 +34,15 @@ func Answer(input string) (int, error) {
 	val := int64(0)
 	for p, N := 0, len(input); p < N; p++ {
 		c := input[p]
-		if c != '\n' {
-			val = (val << 8) + int64(c)
-		} else {
-			if val > prev {
-				increases++
-			}
-			prev = val
-			val = 0
-		}
+		notNl := boolToInt64(c != '\n')
+		increases += int((^notNl & 1) * boolToInt64(val > prev))
+		prev = notNl*prev + val*(^notNl&1)
+		val = notNl * ((val << 8) + int64(c))
 	}
-	if val > prev {
-		increases++
-	}
+	increases += int(boolToInt64(val > prev))
 	return increases, nil
+}
+
+func boolToInt64(b bool) int64 {
+	return *(*int64)(unsafe.Pointer(&b)) & 1
 }
