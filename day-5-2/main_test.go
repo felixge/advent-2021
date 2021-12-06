@@ -44,19 +44,19 @@ func TestGrid(t *testing.T) {
 
 	t.Run("Set", func(t *testing.T) {
 		g := NewGrid(3, 4)
-		g.Set(0, 0, 2)
-		g.Set(2, 3, 3)
-		require.Equal(t, 2, g.Get(0, 0))
-		require.Equal(t, 3, g.Get(2, 3))
+		g.Set(0, 0, 1)
+		g.Set(2, 3, 2)
+		require.Equal(t, 1, g.Get(0, 0))
+		require.Equal(t, 2, g.Get(2, 3))
 	})
 
 	t.Run("String", func(t *testing.T) {
 		g := NewGrid(2, 3)
 		require.Equal(t, "..\n..\n..", g.String())
-		g.Set(0, 0, 3)
-		g.Set(0, 1, 7)
-		g.Set(1, 2, 5)
-		require.Equal(t, "3.\n7.\n.5", g.String())
+		g.Set(0, 0, 1)
+		g.Set(0, 1, 2)
+		g.Set(1, 2, 3)
+		require.Equal(t, "1.\n2.\n.3", g.String())
 	})
 }
 
